@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SirSearchALotPersistence.Repositories
 {
+    /// <summary>
+    /// Entity framework repository
+    /// </summary>
     public class PersonRepository : IPersonRepository
     {
         public PersonRepository(SearchALotEFContext context)
