@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoMapperInitializer.cs" />
     <Compile Include="IntegratedImplementations\PersonManagementService.cs" />
+    <Compile Include="IntegratedImplementations\PersonSearchService.cs" />
     <Compile Include="Models\AddPersonResponse.cs" />
     <Compile Include="Models\PersonDTO.cs" />
     <Compile Include="Interfaces\IPersonManagementService.cs" />

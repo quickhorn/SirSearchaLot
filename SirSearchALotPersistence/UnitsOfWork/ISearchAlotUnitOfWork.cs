@@ -9,6 +9,6 @@ namespace SirSearchALotPersistence.UnitsOfWork
 {
     public interface ISearchALotUnitOfWork
     {
-        public IPersonRepository Persons { get; }
+        IPersonRepository Persons { get; }
     }
 }

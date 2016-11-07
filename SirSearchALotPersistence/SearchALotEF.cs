@@ -18,11 +18,11 @@ namespace SirSearchALotPersistence
         {
             modelBuilder.Entity<Person>()
                 .Property(e => e.FirstName)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<Person>()
                 .Property(e => e.LastName)
-                .IsUnicode(false);
+                .IsUnicode(true);
         }
     }
 }
