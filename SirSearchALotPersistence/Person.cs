@@ -31,5 +31,8 @@ namespace SirSearchALotPersistence
 
         [ForeignKey("PersonId")]
         public List<Interest> Interests { get; set; }
+
+        [Required]
+        public string ImageUrl { get; set; } 
     }
 }

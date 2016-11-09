@@ -21,5 +21,7 @@ namespace SirSearchALotBusinessLogic.Models
         public string ZipCode { get; set; }
 
         public List<InterestDTO> Interests { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }

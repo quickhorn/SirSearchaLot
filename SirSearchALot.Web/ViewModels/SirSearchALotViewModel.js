@@ -3,8 +3,11 @@
 
     self.NewPerson = new PersonViewModel();
     self.AddPerson = function () {
-        $('#NewPersonForm').submit();
-        self.NewPerson = new PersonViewModel();
+        //$('#NewPersonForm').submit();
+        console.log(ko.toJS(self.NewPerson));
+        $.post("/api/Person", ko.toJS(self.NewPerson), function () {
+            self.NewPerson = new PersonViewModel();
+        })
     }
 
     self.SearchString = ko.observable();

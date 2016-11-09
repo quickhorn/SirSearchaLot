@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace SirSearchALot.Web.Controllers.WebApi
@@ -19,11 +20,11 @@ namespace SirSearchALot.Web.Controllers.WebApi
         private IPersonManagementService _service;
 
         [HttpPost]
-        public AddPersonResponse AddPerson()
+        public AddPersonResponse AddPerson(PersonDTO person)
         {
-            var request = Request.Content;
-            //return _service.AddPerson(person);
-            return new AddPersonResponse();
+
+            return _service.AddPerson(person);
+            //return new AddPersonResponse();
         }
     }
 }

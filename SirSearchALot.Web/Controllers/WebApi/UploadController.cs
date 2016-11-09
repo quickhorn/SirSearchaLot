@@ -22,7 +22,8 @@ namespace SirSearchALot.Web.Controllers.WebApi
         {
 
             HttpPostedFile file = HttpContext.Current.Request.Files[0];
-            string path = "";
+            string relativePath = "";
+            string fileName = "";
             
             if (HttpContext.Current.Request.HttpMethod == "POST")
             {
@@ -30,9 +31,9 @@ namespace SirSearchALot.Web.Controllers.WebApi
                 if (file != null && file.ContentLength > 0)
                 {
                     var extension = Path.GetExtension(file.FileName);
-                    var fileName = Guid.NewGuid().ToString() + extension;
-                    var relativePath = Path.Combine(PROFILEIMAGES, fileName);
-                    path = System.Web.HttpContext.Current.Server.MapPath(relativePath);
+                    fileName = Guid.NewGuid().ToString() + extension;
+                    relativePath = Path.Combine(PROFILEIMAGES, fileName);
+                    var path = System.Web.HttpContext.Current.Server.MapPath(relativePath);
                     file.SaveAs(path);
                 }
                 // end ofl8 file doing
@@ -41,7 +42,7 @@ namespace SirSearchALot.Web.Controllers.WebApi
             // Now we need to wire up a response so that the calling script understands what happened
             HttpContext.Current.Response.ContentType = "text/plain";
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            var result = new { name = file.FileName, imageLocation = path };
+            var result = new { name = fileName, imageLocation = relativePath, success = true };
 
             HttpContext.Current.Response.Write(serializer.Serialize(result));
             HttpContext.Current.Response.StatusCode = 200;
