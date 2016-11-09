@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Sir Search A Lot</h1>
+    <p><input type="search" placeholder="Enter first or last name" data-bind="value: SearchString"/> <a class="btn btn-default" data-bind="click: Search">Search &raquo;</a>
+    </p>
+    <p><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#AddPersonModal">Add Person</button></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Search People</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>View
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>
+
+<div class="modal fade" id="AddPersonModal" tabindex="-1" aria-labelledby="myModalLabel" data-bind="with: NewPerson">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Person</h4>
+            </div>
+            <div class="modal-body">
+
+                <form action="/api/Person" enctype="multipart/form-data" id="NewPersonForm" method="post" >
+                    <div class="form-group">
+                        <label for="FirstName">First Name</label>
+                        <input type="text" id="FirstName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="LastName">Last Name</label>
+                        <input type="text" id="LastName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="StreetAddress">Street Address</label>
+                        <input type="text" id="StreetAddress" />
+                    </div>
+                    <div class="form-group">
+                        <label for="City">City</label>
+                        <input type="text" id="City" />
+                    </div>
+                    <div class="form-group">
+                        <label for="State">State</label>
+                        <input type="text" id="State" />
+                    </div>
+                    <div class="form-group">
+                        <label for="ZipCode">Zip Code</label>
+                        <input type="text" id="ZipCode" />
+                    </div>
+                    <div class="row fileupload-buttonbar">
+                        <div class="span7">
+                            <div id="uploader" class="well">
+                                <i class="icon-plus"></i><span>&nbsp;&nbsp;Add file...</span>
+                                <input type="file" id="fileupload" name="fileupload" accept="image/*">
+                                <button id="btnUploadAll" class="btn btn-success pull-right" type="button">
+                                    Upload
+                                </button>
+                                <div class="clearfix">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="span7">
+                            <div class="well hide" id="filelistholder">
+                            </div>
+                        </div>
+                        <div class="span7">
+                        </div>
+                    </div>
+                
+                <div class="form-group">
+                    <h4>Interests</h4>
+                    <ul data-bind="foreach: Interests">
+                        <li>
+                            <span data-bind="text: Name"></span>
+                            <input type="hidden" name="Interest[0].Name" data-bind="value: Name" />
+                        </li>
+                        
+                    </ul>
+                    <input type="text" data-bind="value: NewInterest"/><a class="btn btn-primary" data-bind="click: AddInterest">Add Interest</a>
+                </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bind="click: $parent.AddPerson">Add Person</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+@section scripts
+{
+    <script type="text/javascript">
+        ko.applyBindings(new SirSearchALotViewModel());
+
+        $(function () {
+            $('#fileupload').fileupload({
+                dataType: "json",
+                url: "/api/Upload",
+                limitConcurrentUploads: 1,
+                sequentialUploads: false,
+                progressInterval: 100,
+                maxChunkSize: 10000,
+                add: function (e, data) {
+                    $('#filelistholder').removeClass('hide');
+                    data.context = $('<div />').text(data.files[0].name).appendTo('#filelistholder');
+                    $('</div>').appendTo(data.context);
+                    $('#btnUploadAll').click(function () {
+                        data.submit();
+                    });
+                },
+                done: function (e, data) {
+                    data.context.text(data.files[0].name + '... Completed');
+                    $('</div>').appendTo(data.context);
+                    $('#uploader').hide();
+                },
+                progressall: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#overallbar').css('width', progress + '%');
+                },
+                progress: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    data.context.find('.bar').css('width', progress + '%');
+                }
+            });
+        });
+    </script>
+}

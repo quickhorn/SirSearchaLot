@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SirSearchALotPersistence", "SirSearchALotPersistence\SirSearchALotPersistence.csproj", "{9CED9515-B483-40A1-9995-F2259AB2A6B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SirSearchALot.Persistence", "SirSearchALotPersistence\SirSearchALot.Persistence.csproj", "{9CED9515-B483-40A1-9995-F2259AB2A6B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SirSearchALotBusinessLogic", "SirSearchALotBusinessLogic\SirSearchALotBusinessLogic.csproj", "{34B12391-E50C-4456-8231-B3EE65FDE6AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SirSearchALot.BusinessLogic", "SirSearchALotBusinessLogic\SirSearchALot.BusinessLogic.csproj", "{34B12391-E50C-4456-8231-B3EE65FDE6AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchALotTests", "SearchALotTests\SearchALotTests.csproj", "{D9530694-AC6A-45F3-8B8F-EB9FF0BDE3EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchALot.Tests", "SearchALotTests\SearchALot.Tests.csproj", "{D9530694-AC6A-45F3-8B8F-EB9FF0BDE3EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SirSearchALot.Web", "SirSearchALot.Web\SirSearchALot.Web.csproj", "{E70CDC21-3BCD-4C6A-886E-24EB592D6621}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D9530694-AC6A-45F3-8B8F-EB9FF0BDE3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9530694-AC6A-45F3-8B8F-EB9FF0BDE3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9530694-AC6A-45F3-8B8F-EB9FF0BDE3EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E70CDC21-3BCD-4C6A-886E-24EB592D6621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70CDC21-3BCD-4C6A-886E-24EB592D6621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E70CDC21-3BCD-4C6A-886E-24EB592D6621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E70CDC21-3BCD-4C6A-886E-24EB592D6621}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

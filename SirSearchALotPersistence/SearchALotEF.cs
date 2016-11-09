@@ -13,16 +13,11 @@ namespace SirSearchALotPersistence
         }
 
         public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<Interest> Interests { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Person>()
-                .Property(e => e.FirstName)
-                .IsUnicode(true);
 
-            modelBuilder.Entity<Person>()
-                .Property(e => e.LastName)
-                .IsUnicode(true);
         }
     }
 }

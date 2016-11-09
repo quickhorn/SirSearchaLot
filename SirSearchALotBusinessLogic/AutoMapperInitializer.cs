@@ -13,7 +13,11 @@ namespace SirSearchALotBusinessLogic
     {
         public static void Initialize()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<Person, PersonDTO>().ReverseMap());
+            Mapper.Initialize(cfg => 
+                {
+                    cfg.CreateMap<Person, PersonDTO>().ReverseMap();
+                    cfg.CreateMap<Interest, InterestDTO>().ReverseMap();
+                });
         }
     }
 }

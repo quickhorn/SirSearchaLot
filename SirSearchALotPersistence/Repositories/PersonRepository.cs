@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,8 +28,8 @@ namespace SirSearchALotPersistence.Repositories
         public List<Person> SearchPersons(string search)
         {
             //Consider moving the search where clause somewhere unit testable.
-            var searchUpper = search.ToUpperInvariant();
-            var people = _context.People.Where(p => p.FirstName.ToUpperInvariant().Contains(searchUpper) || p.LastName.ToUpperInvariant().Contains(searchUpper));
+            var searchLower = search.ToLower();
+            var people = _context.People.Include(p => p.Interests).Where(p => p.FirstName.ToLower().Contains(searchLower) || p.LastName.ToLower().Contains(searchLower));
             //Consider parsing search at spaces to better find people and refine search.
             //Consider becoming an expert on search algorithms to provide "relevant" search results here.
             return people.OrderBy(p => p.LastName).ThenBy(p => p.FirstName).ToList();

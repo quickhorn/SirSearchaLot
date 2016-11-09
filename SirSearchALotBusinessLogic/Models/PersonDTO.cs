@@ -11,5 +11,15 @@ namespace SirSearchALotBusinessLogic.Models
         public int PersonId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public string StreetAddress { get; set; }
+
+        public string City { get; set; }
+        
+        public string State { get; set; }
+
+        public string ZipCode { get; set; }
+
+        public List<InterestDTO> Interests { get; set; }
     }
 }

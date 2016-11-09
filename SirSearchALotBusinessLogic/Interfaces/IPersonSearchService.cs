@@ -9,6 +9,6 @@ namespace SirSearchALotBusinessLogic.Interfaces
 {
     public interface IPersonSearchService
     {
-        List<PersonDTO> SearchPersons(string search);
+        SearchPersonResponse SearchPersons(string search);
     }
 }
