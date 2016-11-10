@@ -6,7 +6,7 @@ SirSearchALot provides a simple web interface for person management and search f
 
 The person management and search functionality are separated into two separate services. Currently, both services are implemented in the same solution as class libraries. Both could be pulled into RESTful microservices with ease. This would allow scaling of the search service without having to also scale the management service (where one is more likely to be used more often and more resource intensive than the other).
 
-The persistence layer is using a LocalDb, but an Azure database has been set up as well. If you're interested in seeing the Azure database at work, modify the SirSearchALot.Persistence.SearchALotEF.cs class and remove the indicated comment. (Note, this hasn't been as thoroughly tested as the localdb)
+The persistence layer can be configured to use either a LocalDb (the default) or an Azure database. To switch to the Azure database, uncomment the indicated line in the SirSearchALot.Persistence.SearchALotEF.cs class.
 
 Unit tests. Some minor unit tests for checking the adding of people has been added. You can find these tests in the SearchALot.Tests project.
 
