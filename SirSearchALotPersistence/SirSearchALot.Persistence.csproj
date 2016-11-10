@@ -67,7 +67,6 @@
     <Compile Include="Repositories\PersonRepository.cs" />
     <Compile Include="SearchALotEF.cs" />
     <Compile Include="UnitsOfWork\ISearchALotUnitOfWork.cs" />
-    <Compile Include="UnitsOfWork\SearchALotAzureUnitOfWork.cs" />
     <Compile Include="UnitsOfWork\SearchALotLocalDbUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
