@@ -27,7 +27,9 @@
     self.Search = function () {
         self.PageIsLoading();
         self.SearchResults('');
-        $.get("/api/Search/", { searchString: self.SearchString() }, function (data) {
+        var search = self.SearchString() ? self.SearchString() : '';
+        console.log(search);
+        $.get("/api/Search/", { searchString: search }, function (data) {
             if (data.Success) {
                 self.SearchResults(data.MatchedPersons);
             } else {
@@ -36,7 +38,7 @@
             self.PageHasLoaded();
         }).fail(function () {
             self.PageHasLoaded();
-            alert('Searchingn failed! Something went horribly wrong!')
+            alert('Searching failed! Something went horribly wrong!')
         });
     }
 
