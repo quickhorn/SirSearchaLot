@@ -17,7 +17,7 @@ namespace SirSearchALot.Web
             container.RegisterType<IPersonSearchService, PersonSearchService>();
             container.RegisterType<IPersonManagementService, PersonManagementService>();
             container.RegisterType<IPersonRepository, PersonRepository>();
-            container.RegisterType<ISearchALotUnitOfWork, SearchALotLocalDbUnitOfWork>();
+            container.RegisterType<ISearchALotUnitOfWork, SearchALotUnitOfWork>();
         }
     }
 }

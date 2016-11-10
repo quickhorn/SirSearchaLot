@@ -10,6 +10,8 @@ namespace SirSearchALotPersistence
         public SearchALotEFContext()
             //: base("name=SearchALotEF") //uncomment this to see azure connection
         {
+            Database.SetInitializer<SearchALotEFContext>(new CreateDatabaseIfNotExists<SearchALotEFContext>());
+            
         }
 
         public virtual DbSet<Person> People { get; set; }
