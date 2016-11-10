@@ -1,20 +1,50 @@
 ﻿function SirSearchALotViewModel() {
     var self = this;
 
-    self.NewPerson = new PersonViewModel();
+    self.NewPerson = ko.observable(new PersonViewModel());
     self.AddPerson = function () {
+        self.PageIsLoading();
         //$('#NewPersonForm').submit();
-        console.log(ko.toJS(self.NewPerson));
-        $.post("/api/Person", ko.toJS(self.NewPerson), function () {
-            self.NewPerson = new PersonViewModel();
+        $.post("/api/Person", ko.toJS(self.NewPerson()), function (data) {
+            if (data.Success) {
+                self.NewPerson(new PersonViewModel());
+                self.PageHasLoaded();
+            } else {
+                alert('Unable to add person. ' + data.Message);
+            }
+        }).fail(function () {
+            self.PageHasLoaded();
         })
     }
 
+    self.DialogClosing = function () {
+        self.NewPerson(new PersonViewModel());
+    }
+
+    self.SearchResults = ko.observableArray();
+
     self.SearchString = ko.observable();
     self.Search = function () {
+        self.PageIsLoading();
+        self.SearchResults('');
         $.get("/api/Search/", { searchString: self.SearchString() }, function (data) {
-            console.log(data);
+            if (data.Success) {
+                self.SearchResults(data.MatchedPersons);
+            } else {
+                alert("Unable to retrieve data. Something went horribly wrong!");
+            }
+            self.PageHasLoaded();
+        }).fail(function () {
+            self.PageHasLoaded();
+            alert('Searchingn failed! Something went horribly wrong!')
         });
     }
-    self.SearchResults = ko.observableArray();
+
+    self.PageIsLoading = function () {
+        $('#LoadingModal').modal('show');
+    }
+
+    self.PageHasLoaded = function () {
+        $('#LoadingModal').modal('hide');
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -14,7 +15,8 @@ namespace SirSearchALot.Web.Controllers.WebApi
     //We may consider 
     public class UploadController : ApiController
     {
-        private readonly string PROFILEIMAGES = "~/Content/ProfileImages/";
+        private readonly string PROFILEIMAGES = "/Content/ProfileImages/";
+        private readonly string[] IMAGEEXENSIONS = new string[6] { ".tif", ".tiff", ".gif", ".jpeg", ".jpg", ".png" };
 
         [HttpGet]
         [HttpPost]
@@ -22,26 +24,33 @@ namespace SirSearchALot.Web.Controllers.WebApi
         {
 
             HttpPostedFile file = HttpContext.Current.Request.Files[0];
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
             string relativePath = "";
             string fileName = "";
             
-            if (HttpContext.Current.Request.HttpMethod == "POST")
+            // do something with the file in this space 
+            if (file != null && file.ContentLength > 0)
             {
-                // do something with the file in this space 
-                if (file != null && file.ContentLength > 0)
+                var extension = Path.GetExtension(file.FileName);
+                //check that we got an image. This isn't the best way to verify,
+                //but other options had speed concerns
+                //Consider checking headers instead of extensions./
+                if (!IMAGEEXENSIONS.Contains(extension))
                 {
-                    var extension = Path.GetExtension(file.FileName);
-                    fileName = Guid.NewGuid().ToString() + extension;
-                    relativePath = Path.Combine(PROFILEIMAGES, fileName);
-                    var path = System.Web.HttpContext.Current.Server.MapPath(relativePath);
-                    file.SaveAs(path);
+                    var errorResult = new { message = "The uploaded file is not an image. " };
+                    HttpContext.Current.Response.Write(serializer.Serialize(errorResult));
+                    return new HttpResponseMessage(HttpStatusCode.UnsupportedMediaType);
                 }
-                // end ofl8 file doing
+                fileName = Guid.NewGuid().ToString() + extension;
+                relativePath = Path.Combine(PROFILEIMAGES, fileName);
+                var path = System.Web.HttpContext.Current.Server.MapPath(relativePath);
+                file.SaveAs(path);
             }
-
+            // end ofl8 file doing
+            
             // Now we need to wire up a response so that the calling script understands what happened
             HttpContext.Current.Response.ContentType = "text/plain";
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             var result = new { name = fileName, imageLocation = relativePath, success = true };
 
             HttpContext.Current.Response.Write(serializer.Serialize(result));

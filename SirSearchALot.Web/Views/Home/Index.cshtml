@@ -9,7 +9,37 @@
     <p><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#AddPersonModal">Add Person</button></p>
 </div>
 
-<div class="row">
+<div class="row" id="searchResults" data-bind="visible: SearchResults().length > 0">
+    <div class="col-sm-12">
+        <div class="row" data-bind="foreach: SearchResults">
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" alt="Profile" data-bind="attr: { src: ImageUrl }">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading" data-bind="text: FirstName + ' ' + LastName"></h4>
+                        <address>
+                            <span data-bind="text: StreetAddress"></span><br />
+                            <span data-bind="text: City + ',' + State + ' ' + ZipCode"></span>
+                        </address>
+                        Interests: 
+                        @*<span data-bind="foreach: Interests">
+                            <i class="glyphicon glyphicon-chevron-right"></i><span data-bind="text: Name"></span>
+                        </span>*@
+                        <ul class="interests" data-bind="foreach: Interests" type="circle">
+                            <li data-bind="text: Name"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="row">
     <div class="col-md-4">
         <h2>Search People</h2>
         <p>
@@ -29,10 +59,10 @@
         <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
-</div>
+</div>*@
 
-<div class="modal fade" id="AddPersonModal" tabindex="-1" aria-labelledby="myModalLabel" data-bind="with: NewPerson">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="AddPersonModal" tabindex="-1" aria-labelledby="myModalLabel" data-bind="event: { 'hidden.bs.modal': DialogClosing }">
+    <div class="modal-dialog" role="document" data-bind="with: NewPerson">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -55,9 +85,14 @@
                         <label for="City">City</label>
                         <input type="text" id="City" data-bind="value: City"/>
                     </div>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <label for="State">State</label>
                         <input type="text" id="State" data-bind="value: State"/>
+                    </div>*@
+                    <div class="form-group">
+                        <label for="State">State</label>
+                        <select id="State" data-bind="options: AvailableStates, optionsCaption: 'Select state...',
+                                            value: State"></select>
                     </div>
                     <div class="form-group">
                         <label for="ZipCode">Zip Code</label>
@@ -68,7 +103,7 @@
                             <div class="span7">
                                 <div id="uploader" class="well">
                                     <i class="icon-plus"></i><span>&nbsp;&nbsp;Add file...</span>
-                                    <input type="file" id="fileupload" name="fileupload" accept="image/*">
+                                    <input type="file" id="fileupload" name="fileupload" accept="image/*" data-bind="value: File">
                                     <button id="btnUploadAll" class="btn btn-success pull-right" type="button" data-bind="click: Upload">
                                         Upload
                                     </button>
@@ -86,18 +121,18 @@
                         </form>
                     </div>
                     <div class="row" data-bind="visible: FileUploaded">
-                        <img data-bind="attr: { src: ImageUrl }" />
+                        <img id='uploadedImage' data-bind="attr: { src: ImageUrl }" />
                     </div>
                 <div class="form-group">
                     <h4>Interests</h4>
-                    <ul data-bind="foreach: Interests">
+                    <ul data-bind="foreach: Interests">         
                         <li>
                             <span data-bind="text: Name"></span>
                             <input type="hidden" name="Interests[0].Name" data-bind="value: Name" />
                         </li>
                         
                     </ul>
-                    <input type="text" data-bind="value: NewInterest"/><a class="btn btn-primary" data-bind="click: AddInterest">Add Interest</a>
+                    <input type="text" data-bind="value: NewInterest, valueUpdate: 'keyup'"/><button class="btn btn-primary" data-bind="click: AddInterest, enable: AddInterestButtonEnabled">Add Interest</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -107,41 +142,26 @@
             </div>
         </div>
     </div>
+
+<!--Loading Modal-->
+<div class="modal fade" id="LoadingModal" tabindex="-1" aria-labelledby="LoadingModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="row ">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <h1><span class="spinner"><i class="glyphicon glyphicon-refresh spin"></i></span> <span>WAIT FOR IT...</span></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts
 {
     <script type="text/javascript">
+        $('#searchResults').hide();
         ko.applyBindings(new SirSearchALotViewModel());
 
-        //$(function () {
-        //    $('#fileupload').fileupload({
-        //        dataType: "json",
-        //        url: "/api/Upload",
-        //        limitConcurrentUploads: 1,
-        //        sequentialUploads: false,
-        //        progressInterval: 100,
-        //        maxChunkSize: 10000,
-        //        add: function (e, data) {
-        //            $('#filelistholder').removeClass('hide');
-        //            data.context = $('<div />').text(data.files[0].name).appendTo('#filelistholder');
-        //            $('</div>').appendTo(data.context);
-        //            $('#btnUploadAll').click(function () {
-        //                data.submit();
-        //            });
-        //        },
-        //        done: function (e, data) {
-        //            data.context.text(data.files[0].name + '... Completed');
-        //            $('</div>').appendTo(data.context);
-        //            $('#uploader').hide();
-        //        },
-        //        progressall: function (e, data) {
-        //            var progress = parseInt(data.loaded / data.total * 100, 10);
-        //            $('#overallbar').css('width', progress + '%');
-        //        },
-        //        progress: function (e, data) {
-        //            var progress = parseInt(data.loaded / data.total * 100, 10);
-        //            data.context.find('.bar').css('width', progress + '%');
-        //        }
-        //    });
-        //});
     </script>
 }

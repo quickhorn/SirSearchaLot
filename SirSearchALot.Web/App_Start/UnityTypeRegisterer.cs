@@ -14,11 +14,10 @@ namespace SirSearchALot.Web
     {
         public static void RegisterTypes(UnityContainer container)
         {
-
             container.RegisterType<IPersonSearchService, PersonSearchService>();
             container.RegisterType<IPersonManagementService, PersonManagementService>();
             container.RegisterType<IPersonRepository, PersonRepository>();
-            container.RegisterType<ISearchALotUnitOfWork, SearchALotUnitOfWork>();
+            container.RegisterType<ISearchALotUnitOfWork, SearchALotLocalDbUnitOfWork>();
         }
     }
 }

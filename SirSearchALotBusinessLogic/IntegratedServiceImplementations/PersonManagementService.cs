@@ -28,6 +28,10 @@ namespace SirSearchALotBusinessLogic.IntegratedImplementations
                 {
                     return new AddPersonResponse() { Message = "Missing Argument. First and last name must be included for a person. For single named persons, use that name twice (E.g. Cher Cher)", Success = false };
                 }
+                if (string.IsNullOrEmpty(person.City) || string.IsNullOrEmpty(person.StreetAddress) || string.IsNullOrEmpty(person.State) || person.State.Length != 2)
+                {
+                    return new AddPersonResponse() { Message = "Address is incorrect. Please include an address." };
+                }
                 //add other validation here for state, zip, and address and imgurl.
                 var entityPerson = Mapper.Map<Person>(person);
                 _unitOfWork.Persons.AddPerson(entityPerson);

@@ -20,6 +20,8 @@ namespace SirSearchALotPersistence
 
         [Required]
         public string StreetAddress { get; set; }
+
+        public string City { get; set; }
         
         [Required]
         public string State { get; set; }

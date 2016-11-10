@@ -8,7 +8,7 @@ namespace SirSearchALotPersistence
     public partial class SearchALotEFContext : DbContext
     {
         public SearchALotEFContext()
-            : base("name=SearchALotEF")
+            //: base("name=SearchALotEF") //uncomment this to see azure connection
         {
         }
 
