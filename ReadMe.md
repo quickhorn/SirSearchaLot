@@ -8,7 +8,6 @@ The person management and search functionality are separated into two separate s
 
 The persistence layer can be configured to use either a LocalDb (the default) or an Azure database. To switch to the Azure database, uncomment the indicated line in the SirSearchALot.Persistence.SearchALotEF.cs class.
 
-Unit tests. Some minor unit tests for checking the adding of people has been added. You can find these tests in the SearchALot.Tests project.
 
 ## New Technologies
 
@@ -16,13 +15,13 @@ My favorite part of technical tests is learning new things. However, sometimes t
 
 ## Shortcomings
 
-My UI design skills are not incredible. I had hoped to spend more time on the UI, but ran short. The UI failures include poor error handling for the user. This is currently done with alerts, and really should take advantage of the Bootstrap errors.
+I had hoped to spend more time on the UI, but ran short. The UI failures include poor error handling for the user. This is currently done with alerts, and should instead take advantage of the Bootstrap errors.
 
 The MVVM framework is using Knockout.js. I actually really like this framework, but I also understand it is not as popular as other front-end MVVM frameworks. However, I still find ANY MVVM framework is better than relying solely on event-driven UIs.
 
 The application does not currently log issues.
 
-The application doesn't account for searching by both a first AND last name. The requirements did not make this necessary, but I feel is something that could be improved. 
+The application doesn't account for searching by both a first AND last name. The requirements did not make this necessary, but I feel it is something that could be improved. 
 
 ## Thanks
 
